@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>صفحة السلة</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+    }
+    .cart-item {
+      background: #1a1a1a;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    .pay-btn {
+      background-color: #4da6ff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🛒 السلة</h1>
+  <div id="cartList"></div>
+
+  <button class="pay-btn" onclick="goToFakePayment()">💳 المتابعة إلى الدفع</button>
+
+  <script>
+    const cartList = document.getElementById("cartList");
+    const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    if (cart.length === 0) {
+      cartList.innerHTML = "<p>السلة فارغة 😴</p>";
+    } else {
+      cart.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.textContent = item;
+        cartList.appendChild(div);
+      });
+    }
+
+    function goToFakePayment() {
+      window.location.href = "payment.html";
+    }
+  </script>
+</body>
+</html>

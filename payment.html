@@ -1,0 +1,57 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>الدفع</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+    .pay-form {
+      background: #1a1a1a;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 400px;
+      margin: auto;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 0.5rem 0;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      background: #4da6ff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>💳 بوابة الدفع الوهمية</h1>
+  <div class="pay-form">
+    <input type="text" placeholder="اسم حامل البطاقة">
+    <input type="text" placeholder="رقم البطاقة (وهمي)">
+    <input type="text" placeholder="تاريخ الانتهاء MM/YY">
+    <input type="text" placeholder="CVV">
+
+    <button onclick="completePayment()">إتمام الدفع</button>
+  </div>
+
+  <script>
+    function completePayment() {
+      alert("🎉 تم الدفع بنجاح! شكرًا لطلبك ❤️");
+      localStorage.removeItem("cartItems"); // إفراغ السلة بعد الدفع
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

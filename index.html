@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LootCode - كل أكوادك في مكان واحد</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0f0f0f;
+      color: #ffffff;
+    }
+    header {
+      background-color: #000000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.5rem;
+      color: #4da6ff;
+      font-weight: bold;
+    }
+    nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+    }
+    .hero {
+      background: linear-gradient(to left, #001f3f, #000);
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      color: #4da6ff;
+    }
+    .products {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .product {
+      background-color: #1a1a1a;
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .product:hover {
+      background-color: #222;
+    }
+    footer {
+      background-color: #000000;
+      color: #aaa;
+      text-align: center;
+      padding: 1rem;
+    }
+    .add-to-cart {
+  background-color: #0089cd;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.add-to-cart:hover {
+  background-color: #0089cd;
+}
+
+.floating-cart-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #4da6ff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 1.8rem;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#cart-count {
+  background-color: crimson;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+  </style>
+</head>
+<script>
+const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+function addToCart(productName) {
+  let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+  cart.push(productName);
+  localStorage.setItem("cartItems", JSON.stringify(cart));
+  alert("✅ تم إضافة " + productName + " إلى السلة");
+
+  updateCartCount();
+}
+
+
+
+function updateCartCount() {
+  document.getElementById("cart-count").textContent = cart.length;
+}
+
+
+  function viewCart() {
+  const modal = document.getElementById("cartModal");
+  const list = document.getElementById("cartItems");
+  list.innerHTML = ""; // تفريغ القائمة قبل العرض
+
+  if (cart.length === 0) {
+    list.innerHTML = "<li>السلة فارغة 💤</li>";
+  } else {
+    cart.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.style.display = "flex";
+      li.style.justifyContent = "space-between";
+      li.style.alignItems = "center";
+      li.style.marginBottom = "10px";
+
+      const name = document.createElement("span");
+      name.textContent = item;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "❌ حذف";
+      removeBtn.style.background = "crimson";
+      removeBtn.style.color = "white";
+      removeBtn.style.border = "none";
+      removeBtn.style.borderRadius = "5px";
+      removeBtn.style.cursor = "pointer";
+      removeBtn.onclick = () => {
+        cart.splice(index, 1);
+        viewCart(); // إعادة تحديث العرض
+      };
+
+      li.appendChild(name);
+      li.appendChild(removeBtn);
+      list.appendChild(li);
+    });
+  }
+
+  modal.style.display = "block";
+}
+
+
+  function closeCart() {
+    document.getElementById("cartModal").style.display = "none";
+  }
+</script>
+
+<body>
+
+  <a href="checkout.html" class="floating-cart-btn">
+    🛒 <span id="cart-count">0</span>
+  </a>
+  
+  
+
+
+<header>
+  <div class="logo">LootCode</div>
+  <nav>
+    <a href="#">الرئيسية</a>
+    <a href="#">المتجر</a>
+    <a href="#">تواصل معنا</a>
+
+
+
+  </nav>
+</header>
+
+
+  <section class="hero" style="background: none; padding: 0;">
+    <img src="banner.png" alt="بانر LootCode" style="width: 100%; max-height: 400px; object-fit: cover;">
+  </section>
+     
+  <section class="products" id="products-container">
+    <!-- المنتجات هتتنشأ هنا بالجاڤا سكريبت -->
+  </section>
+  
+  <footer>
+    &copy; 2025 LootCode - جميع الحقوق محفوظة
+  </footer>
+  <footer>
+    &copy; للتواصل @LootCode واتساب : +966536314123 
+  </footer>
+  <script>
+    const products = [
+      {
+        name: 'لعبة FIFA 25 - PS5',
+        price: '59.99$',
+        image: 'https://digiseller.mycdn.ink/imgwebp.ashx?idc=1387&w=400&dc=788015647'
+      },
+      {
+        name: 'Steam Wallet - 20$',
+        price: '20.00$',
+        image: 'https://digiseller.mycdn.ink/imgwebp.ashx?idc=997&w=400&dc=794424029'
+      },
+      {
+        name: 'بطاقة Xbox Game Pass',
+        price: '29.99$',
+        image: 'https://digiseller.mycdn.ink/imgwebp.ashx?idc=192&w=400&dc=794424003'
+      },
+      {
+        name: 'كود Call of Duty',
+        price: '49.99$',
+        image: 'https://digiseller.mycdn.ink/imgwebp.ashx?idc=1074&w=400&dc=779291492'
+      }
+    ];
+  
+    const container = document.getElementById('products-container');
+  
+    products.forEach(product => {
+      const productDiv = document.createElement('div');
+      productDiv.className = 'product';
+  
+      productDiv.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" style="width:100%; border-radius:10px;">
+        <h3>${product.name}</h3>
+        <p style="color: #4da6ff">${product.price}</p>
+        <button class="add-to-cart" onclick="addToCart('${product.name}')">🛒 أضف إلى السلة</button>
+      `;
+  
+      container.appendChild(productDiv);
+    });
+  
+    function addToCart(productName) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push(productName);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("✅ تم إضافة " + productName + " إلى السلة");
+      updateCartCount();
+    }
+  
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      document.getElementById("cart-count").textContent = cart.length;
+    }
+  
+    // شغل التحديث أول ما تفتح الصفحة
+    updateCartCount();
+  </script>
+  
+
+
+</body>
+
+
+</html>
+
+
