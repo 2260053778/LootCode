@@ -1,165 +1,234 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>صفحة الدفع - LootCode</title>
+  <title>إكمال الدفع - LootCode</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
       background-color: #0f0f0f;
-      color: #ffffff;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background-color: #000000;
-      padding: 1rem 2rem;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #4da6ff;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 2rem auto;
-      background-color: #1a1a1a;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
       padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
     }
 
-    h2 {
+    h1 {
+      color: #4da6ff;
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
 
-    ul {
+    .cart-items {
+      background-color: #1a1a1a;
+      padding: 1rem;
+      border-radius: 12px;
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+    }
+
+    .cart-items ul {
       list-style: none;
       padding: 0;
     }
 
-    li {
-      background-color: #2a2a2a;
-      padding: 1rem;
-      margin-bottom: 10px;
-      border-radius: 8px;
+    .cart-items li {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 8px;
+    }
+
+    .cart-items img {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      margin-left: 10px;
+    }
+
+    .remove-btn {
+      background-color: crimson;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
     }
 
     .total {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-top: 1.5rem;
+      text-align: left;
       color: #4da6ff;
-    }
-
-    .payment-methods {
-      margin-top: 2rem;
-    }
-
-    .payment-methods label {
-      display: block;
-      margin: 0.5rem 0;
-      cursor: pointer;
-    }
-
-    .btn {
-      display: block;
-      margin: 2rem auto 1rem auto;
-      padding: 0.75rem 2rem;
-      font-size: 1rem;
-      background-color: #4da6ff;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      font-size: 1.2rem;
+      margin-top: 10px;
       font-weight: bold;
     }
 
-    .btn:hover {
-      background-color: #007acc;
+    .payment-section {
+      background-color: #1a1a1a;
+      padding: 1rem;
+      border-radius: 12px;
+      max-width: 700px;
+      margin: auto;
     }
 
-    .back {
-      text-align: center;
+    .payment-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .payment-option img {
+      width: 30px;
+      margin-left: 10px;
+    }
+
+    .payment-fields {
       margin-top: 1rem;
     }
 
-    .back a {
-      color: #aaa;
-      text-decoration: none;
+    .payment-fields input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: none;
+      background-color: #2a2a2a;
+      color: white;
+    }
+
+    .pay-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #4da6ff;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .pay-btn:hover {
+      background-color: #1f8fe1;
     }
   </style>
 </head>
 <body>
 
-  <header>صفحة الدفع - LootCode</header>
+  <h1>🧾 مراجعة الطلب وإكمال الدفع</h1>
 
-  <div class="container">
-    <h2>🛒 المنتجات في سلتك</h2>
-    <ul id="cartItemsList"></ul>
+  <div class="cart-items">
+    <h3>المنتجات في السلة:</h3>
+    <ul id="checkoutCart"></ul>
+    <div class="total">المجموع الكلي: <span id="totalAmount">0.00</span> $</div>
+  </div>
 
-    <div class="total" id="totalPrice">الإجمالي: 0.00$</div>
+  <div class="payment-section">
+    <h3>اختر وسيلة الدفع:</h3>
 
-    <div class="payment-methods">
-      <h3>اختر وسيلة الدفع:</h3>
-      <label><input type="radio" name="payment" value="Visa"> 💳 Visa / MasterCard</label>
-      <label><input type="radio" name="payment" value="PayPal"> 🅿️ PayPal</label>
-      <label><input type="radio" name="payment" value="Card"> 🪙 بطاقات رصيد</label>
+    <div class="payment-option">
+      <input type="radio" name="payment" value="بطاقة ائتمان" checked>
+      <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" alt="بطاقة">
+      <label>💳 بطاقة ائتمان</label>
     </div>
 
-    <button class="btn" onclick="checkout()">إتمام الشراء</button>
-
-    <div class="back">
-      <a href="index.html">← الرجوع للمتجر</a>
+    <div class="payment-option">
+      <input type="radio" name="payment" value="تحويل بنكي">
+      <img src="https://cdn-icons-png.flaticon.com/512/2620/2620995.png" alt="تحويل">
+      <label>🏦 تحويل بنكي</label>
     </div>
+
+    <div class="payment-option">
+      <input type="radio" name="payment" value="محفظة رقمية">
+      <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="محفظة">
+      <label>📱 محفظة رقمية</label>
+    </div>
+
+    <div class="payment-fields">
+      <input type="text" placeholder="الاسم الكامل">
+      <input type="text" placeholder="رقم الحساب أو رقم البطاقة">
+    </div>
+
+    <button class="pay-btn" onclick="completePayment()">✅ إكمال عملية الدفع</button>
   </div>
 
   <script>
-    const productPrices = {
-      'لعبة FIFA 25 - PS5': 59.99,
-      'Steam Wallet - 20$': 20.00,
-      'بطاقة Xbox Game Pass': 29.99,
-      'كود Call of Duty': 49.99
+    const checkoutCart = document.getElementById("checkoutCart");
+    const totalAmount = document.getElementById("totalAmount");
+
+    // المنتجات الأصلية بالأسعار والصور (نفس اللي في index)
+    const productsData = {
+      "لعبة FIFA 25 - PS5": {
+        price: 59.99,
+        image: "https://digiseller.mycdn.ink/imgwebp.ashx?idc=1387&w=400&dc=788015647"
+      },
+      "Steam Wallet - 20$": {
+        price: 20.00,
+        image: "https://digiseller.mycdn.ink/imgwebp.ashx?idc=997&w=400&dc=794424029"
+      },
+      "بطاقة Xbox Game Pass": {
+        price: 29.99,
+        image: "https://digiseller.mycdn.ink/imgwebp.ashx?idc=192&w=400&dc=794424003"
+      },
+      "كود Call of Duty": {
+        price: 49.99,
+        image: "https://digiseller.mycdn.ink/imgwebp.ashx?idc=1074&w=400&dc=779291492"
+      }
     };
 
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const list = document.getElementById("cartItemsList");
-    let total = 0;
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    if (cart.length === 0) {
-      list.innerHTML = "<li>السلة فارغة 💤</li>";
-    } else {
-      cart.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = item + " - $" + productPrices[item].toFixed(2);
-        list.appendChild(li);
-        total += productPrices[item] || 0;
-      });
-    }
+    function renderCart() {
+      checkoutCart.innerHTML = "";
+      let total = 0;
 
-    document.getElementById("totalPrice").textContent = "الإجمالي: SAR" + total.toFixed(2);
-
-    function checkout() {
-      const selected = document.querySelector('input[name="payment"]:checked');
-      if (!selected) {
-        alert("⚠️ الرجاء اختيار وسيلة دفع أولاً.");
+      if (cart.length === 0) {
+        checkoutCart.innerHTML = "<li>السلة فارغة 💤</li>";
+        totalAmount.textContent = "0.00";
         return;
       }
 
-      const method = selected.value;
-      alert("✅ تم تنفيذ عملية الشراء باستخدام " + method + " بنجاح!\nشكراً لتسوقك من LootCode 🎮");
+      cart.forEach((item, index) => {
+        const li = document.createElement("li");
 
+        const product = productsData[item];
+        total += product.price;
+
+        li.innerHTML = `
+          <div style="display: flex; align-items: center;">
+            <img src="${product.image}" alt="${item}">
+            <span>${item}</span>
+          </div>
+          <div>
+            <span>${product.price.toFixed(2)} $</span>
+            <button class="remove-btn" onclick="removeItem(${index})">❌</button>
+          </div>
+        `;
+        checkoutCart.appendChild(li);
+      });
+
+      totalAmount.textContent = total.toFixed(2);
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function completePayment() {
+      if (cart.length === 0) {
+        alert("⚠️ السلة فارغة، لا يمكن إكمال الدفع!");
+        return;
+      }
+
+      alert("✅ تم الدفع بنجاح! شكراً لتسوقك من LootCode ❤️");
       localStorage.removeItem("cart");
       window.location.href = "index.html";
     }
-  </script>
 
+    renderCart();
+  </script>
 </body>
 </html>
